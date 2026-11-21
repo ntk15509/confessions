@@ -112,50 +112,41 @@
 }
 
 
-.contact_block {
-  display: flex;
-  flex-direction: column;
+.contact_us_btn {
+  display: inline-flex;
   align-items: center;
-  gap: 2px;
-  width: min(100%, 420px);
-  min-width: 0;
-  padding-top: 14px;
-  text-align: center;
-  border-top: 1.5px dashed var(--card-border);
+  gap: 10px;
+  padding: 11px 22px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: var(--card-bg);
+  text-decoration: none;
+  background: var(--text-main);
+  border: 1.5px solid var(--text-main);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 
-  .contact_label {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.78rem;
-    font-weight: 500;
-    color: var(--text-muted);
+  .contact_arrow {
+    font-size: 0.75rem;
+    transition: transform 0.2s ease;
+  }
 
-    i {
-      color: var(--accent-color);
+  @media (hover: hover) {
+    &:hover {
+      color: #ffffff;
+      background: var(--accent-color);
+      border-color: var(--accent-color);
+
+      .contact_arrow {
+        transform: translateX(4px);
+      }
     }
   }
 
-  .contact_mail {
-    max-width: 100%;
-    font-size: 1.15rem;
-    font-weight: 700;
-    line-height: 1.4;
-    color: var(--text-main);
-    text-decoration: none;
-    overflow-wrap: anywhere;
-    transition: color 0.2s ease;
-
-    &:hover {
-      color: var(--accent-color);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
-    &:focus-visible {
-      outline: 2px solid var(--accent-color);
-      outline-offset: 3px;
-      border-radius: 4px;
-    }
+  &:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 3px;
   }
 }
