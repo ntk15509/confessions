@@ -34,7 +34,7 @@ export default function ConfessionModal({
       <div className={`modal_box confession_pane${important ? " announcement_box" : ""}`}>
         <div className="modal_pane_header">
           <div className="confession_title">
-            {important ? "📢 " : ""}Confession #{String(confession.number || 0).padStart(3, "0")}
+            {important ? "🚨 " : ""}Confession #{String(confession.number || 0).padStart(3, "0")}
           </div>
           <button
             type="button"

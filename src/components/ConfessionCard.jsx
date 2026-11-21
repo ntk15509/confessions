@@ -39,7 +39,7 @@ export default function ConfessionCard({
       onClick={() => onOpen(confession.uuid)}
     >
       <div className="confession_title">
-        {important ? "📢 " : ""}Confession #{String(confession.number || 0).padStart(3, "0")}
+        {important ? "🚨 " : ""}Confession #{String(confession.number || 0).padStart(3, "0")}
       </div>
 
       <div className="confession_content">

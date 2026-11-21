@@ -7,7 +7,7 @@ export default function Announcements({
   onOpen,
   onLike
 }) {
-  const [collapsed, setCollapsed] = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
   const trackRef = useRef(null);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
@@ -45,7 +45,7 @@ export default function Announcements({
           className={`announcement_toggle_btn${!collapsed ? " active" : ""}`}
           onClick={() => setCollapsed((value) => !value)}
         >
-          <span>📢 THÔNG BÁO QUAN TRỌNG ({announcements.length})</span>
+          <span>🚨 QUAN TRỌNG ({announcements.length})</span>
           <i className="fa-solid fa-chevron-down toggle_icon" />
         </button>
 
