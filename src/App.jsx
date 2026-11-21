@@ -822,18 +822,29 @@ export default function App() {
 
           <div className="header_titles">
             <h1>NHSC Confessions</h1>
-            <h4>
-              <i className="fa-solid fa-clock-rotate-left" />{" "}
-              Bài viết sẽ được hiển thị công khai sau khi được kiểm duyệt
-            </h4>
           </div>
 
           <div id="chu_thich">
-            <i className="fa-solid fa-circle-info info_icon" />
             <span>
               Nơi chia sẻ ẩn danh tâm tư, kỷ niệm học đường một cách tự do và có chừng mực.
             </span>
           </div>
+
+
+          {/* contact */}
+            <div className="contact_block">
+            <span className="contact_label">
+              <i className="fa-regular fa-envelope" aria-hidden="true" />
+              Contact
+            </span>
+            <a
+              className="contact_mail"
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=cfs.workcontact@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer" > cfs.workcontact@gmail.com 
+            </a>
+          </div>
+
         </header>
 
         <Announcements
