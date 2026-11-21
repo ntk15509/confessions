@@ -55,19 +55,13 @@ function normalizeConfession(item) {
   };
 }
 
-function normalizeAnnouncement(item) {
-  return {
-    uuid: String(item.uuid),
-    status: item.status || "important",
-    content: item.content || "",
-    time: item.created_at,
-    likes: Number(item.likes) || 0,
-    commentCount: Number(item.comment_count) || 0,
-    lastUpdated: item.last_updated
-      ? new Date(item.last_updated).getTime()
-      : Date.now(),
-    comments: null
-  };
+function syncAnnouncementNumbers(announcements, confessions) {
+  if (!Array.isArray(announcements)) return [];
+  const numberMap = new Map(confessions.map((c) => [String(c.uuid), c.number]));
+  return announcements.map((ann) => ({
+    ...ann,
+    number: numberMap.get(String(ann.uuid)) || ann.number || 0
+  }));
 }
 
 export default function App() {
@@ -194,7 +188,7 @@ export default function App() {
             "uuid, created_at, content, status, likes, comment_count, last_updated",
             { count: "exact" }
           )
-          .eq("status", "approved")
+          .in("status", ["approved", "important"])
           .order("created_at", { ascending: false })
           .range(offset, offset + limit - 1);
 
@@ -254,8 +248,23 @@ export default function App() {
       .order("created_at", { ascending: false });
 
     if (announcementError) throw announcementError;
+    if (!Array.isArray(data) || data.length === 0) return [];
 
-    return Array.isArray(data) ? data.map(normalizeAnnouncement) : [];
+    const itemsWithNumber = await Promise.all(
+      data.map(async (item) => {
+        const { count } = await supabase
+          .from("confessions")
+          .select("uuid", { count: "exact", head: true })
+          .in("status", ["approved", "important"])
+          .lte("created_at", item.created_at);
+        return normalizeConfession({
+          ...item,
+          display_number: count || 0
+        });
+      })
+    );
+
+    return itemsWithNumber;
   }, []);
 
   const reloadList = useCallback(
@@ -296,7 +305,7 @@ export default function App() {
 
         if (requestId !== requestIdRef.current) return;
         if (announcementRows) {
-          setAnnouncements(announcementRows);
+          setAnnouncements(syncAnnouncementNumbers(announcementRows, confessionPage.rows));
         }
       } catch (error) {
         console.error("Supabase load error:", error);
@@ -408,7 +417,9 @@ export default function App() {
           } : row;
         });
       });
-      setAnnouncements(announcementRows);
+      if (announcementRows) {
+        setAnnouncements(syncAnnouncementNumbers(announcementRows, confessionPage.rows));
+      }
       setTotalCount(confessionPage.total);
 
       offsetRef.current = confessionPage.rows.length;
@@ -467,6 +478,14 @@ export default function App() {
       })) : [];
 
       setConfessions(items =>
+        items.map(item => String(item.uuid) === String(uuid) ? {
+          ...item,
+          comments,
+          commentCount: comments.length
+        } : item)
+      );
+
+      setAnnouncements(items =>
         items.map(item => String(item.uuid) === String(uuid) ? {
           ...item,
           comments,
@@ -790,6 +809,120 @@ export default function App() {
     );
   }, [expandedId, confessions, announcements]);
 
+  const [highlightedId, setHighlightedId] = useState(null);
+  const highlightTimeoutRef = useRef(null);
+
+  const triggerHighlight = useCallback((uuid) => {
+    setHighlightedId(String(uuid));
+    if (highlightTimeoutRef.current) {
+      clearTimeout(highlightTimeoutRef.current);
+    }
+    highlightTimeoutRef.current = setTimeout(() => {
+      setHighlightedId(null);
+    }, 4000);
+  }, []);
+
+  const scrollToAndHighlightConfession = useCallback(
+    async (uuid) => {
+      const idStr = String(uuid);
+      triggerHighlight(idStr);
+
+      document.documentElement.classList.remove("confession-modal-open");
+      document.body.classList.remove("confession-modal-open");
+
+      let inList = confessions.some(c => String(c.uuid) === idStr);
+
+      if (!inList && hasMore) {
+        const targetAnnouncement = announcements.find(a => String(a.uuid) === idStr);
+        if (targetAnnouncement?.time) {
+          try {
+            const { count } = await supabase
+              .from("confessions")
+              .select("uuid", { count: "exact", head: true })
+              .in("status", ["approved", "important"])
+              .gte("created_at", targetAnnouncement.time);
+
+            const neededLimit = Math.max(PAGE_SIZE, (count || 0) + 15);
+            const page = await fetchConfessionPage({
+              query: activeQueryRef.current.query,
+              dateQuery: activeQueryRef.current.dateQuery,
+              offset: 0,
+              limit: neededLimit
+            });
+
+            setConfessions(page.rows);
+            offsetRef.current = page.rows.length;
+            setTotalCount(page.total);
+            setHasMore(offsetRef.current < page.total);
+          } catch (err) {
+            console.error("Error loading confession for scroll:", err);
+          }
+        }
+      }
+
+      const performJump = () => {
+        // If element is already in feed DOM, scroll directly to it
+        const existingEl = document.getElementById(`confession-feed-${idStr}`);
+        if (existingEl) {
+          existingEl.scrollIntoView({ behavior: "smooth", block: "center" });
+          return;
+        }
+
+        const rowIndex = virtualRows.findIndex(
+          r => r.type === "date" && r.items.some(i => String(i.uuid) === idStr)
+        );
+
+        if (rowIndex === -1) return;
+
+        const dateRow = virtualRows[rowIndex];
+        const cardIndexInGroup = dateRow.items.findIndex(i => String(i.uuid) === idStr);
+
+        const cardHeight = columns === 1 ? 250 : 240;
+        const gap = 16;
+        const cardRow = Math.max(0, Math.floor(cardIndexInGroup / Math.max(1, columns)));
+        const cardTopInDateBlock = 20 + 42 + cardRow * (cardHeight + gap);
+
+        let rowStartOffset = scrollMargin;
+        for (let i = 0; i < rowIndex; i++) {
+          rowStartOffset += virtualizer.measurementsCache[i]?.size ?? virtualizer.options.estimateSize(i);
+        }
+
+        const targetY = Math.max(
+          0,
+          Math.round(rowStartOffset + cardTopInDateBlock - (window.innerHeight - cardHeight) / 2)
+        );
+
+        window.scrollTo({
+          top: targetY,
+          behavior: "smooth"
+        });
+
+        let attempts = 0;
+        const checkInterval = setInterval(() => {
+          attempts++;
+          const el = document.getElementById(`confession-feed-${idStr}`);
+          if (el) {
+            clearInterval(checkInterval);
+            el.scrollIntoView({ behavior: "smooth", block: "center" });
+          } else if (attempts > 25) {
+            clearInterval(checkInterval);
+          }
+        }, 50);
+      };
+
+      setTimeout(performJump, 50);
+    },
+    [confessions, announcements, hasMore, virtualRows, virtualizer, columns, scrollMargin, fetchConfessionPage, triggerHighlight]
+  );
+
+  const handleAnnouncementClick = useCallback(
+    (uuid) => {
+      setExpandedId(String(uuid));
+      scrollToAndHighlightConfession(uuid);
+    },
+    [scrollToAndHighlightConfession]
+  );
+
   return (
     <>
       <div className="app_container">
@@ -822,10 +955,6 @@ export default function App() {
 
           <div className="header_titles">
             <h1>NHSC Confessions</h1>
-            <h4>
-              <i className="fa-solid fa-clock-rotate-left" />{" "}
-              Bài viết sẽ được hiển thị công khai sau khi được kiểm duyệt
-            </h4>
           </div>
 
           <div id="chu_thich">
@@ -839,7 +968,7 @@ export default function App() {
         <Announcements
           announcements={announcements}
           liked={liked}
-          onOpen={setExpandedId}
+          onOpen={handleAnnouncementClick}
           onLike={like}
         />
 
@@ -938,116 +1067,76 @@ export default function App() {
 
         <main id="confession_list" ref={listRef}>
           {initialLoading ? (
-            <p style={{
-              textAlign: "center",
-              color: "var(--text-muted)",
-              padding: 20
-            }}>
+            <p className="empty_status_message">
               Đang tải...
             </p>
           ) : loadError ? (
-            <p style={{
-              textAlign: "center",
-              color: "var(--text-muted)",
-              padding: 20
-            }}>
+            <p className="empty_status_message">
               {loadError}
             </p>
           ) : confessions.length === 0 ? (
-            <p style={{
-              textAlign: "center",
-              color: "var(--text-muted)",
-              padding: 20
-            }}>
+            <p className="empty_status_message">
               {search.trim() || dateSearch.trim()
                 ? "Không tìm thấy bài viết phù hợp với điều kiện tìm kiếm."
                 : "Chưa có bài viết nào được phê duyệt."}
             </p>
           ) : (
             <>
-              <div style={{
-                position: "relative",
-                width: "100%",
-                height: `${virtualizer.getTotalSize()}px`
-              }}>
-                {virtualItems.map(
-                  virtualItem => {
-                    const row = virtualRows[virtualItem.index];
+              <div
+                className="virtual_container"
+                style={{ height: `${virtualizer.getTotalSize()}px` }}
+              >
+                {virtualItems.map(virtualItem => {
+                  const row = virtualRows[virtualItem.index];
+                  if (!row) return null;
 
-                    if (!row) return null;
-
-                    return (
-                      <div
-                        key={virtualItem.key}
-                        data-index={virtualItem.index}
-                        ref={virtualizer.measureElement}
-                        style={{
-                          position: "absolute",
-                          top:
-                            virtualItem.start -
-                            virtualizer.options.scrollMargin,
-                          left: 0,
-                          width: "100%",
-                          paddingBottom: 22
-                        }}
-                      >
-                        {row.type === "date" && (
-                          <div className="date_block">
-                            <div className="date_block_header">
-                              <span>📅 Ngày {row.date}</span>
-                            </div>
-
-                            <div
-                              className="date_block_grid"
-                              style={{
-                                gridTemplateColumns:
-                                  `repeat(${columns}, minmax(0, 1fr))`
-                              }}
-                            >
-                              {row.items.map(item => (
-                                <ConfessionCard
-                                  key={item.uuid}
-                                  confession={item}
-                                  liked={liked.includes(
-                                    String(item.uuid)
-                                  )}
-                                  onOpen={setExpandedId}
-                                  onLike={like}
-                                />
-                              ))}
-                            </div>
+                  return (
+                    <div
+                      key={virtualItem.key}
+                      data-index={virtualItem.index}
+                      ref={virtualizer.measureElement}
+                      className="virtual_row_item"
+                      style={{
+                        top: virtualItem.start - virtualizer.options.scrollMargin
+                      }}
+                    >
+                      {row.type === "date" && (
+                        <div className="date_block">
+                          <div className="date_block_header">
+                            <span>📅 Ngày {row.date}</span>
                           </div>
-                        )}
 
-                        {row.type === "loader" && (
                           <div
+                            className="date_block_grid"
                             style={{
-                              minHeight: 48,
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              color: "var(--text-muted)",
-                              fontSize: "0.85rem"
+                              gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`
                             }}
                           >
-                            {loadingMore ? "Đang tải thêm..." : ""}
+                            {row.items.map(item => (
+                              <ConfessionCard
+                                key={item.uuid}
+                                confession={item}
+                                highlighted={highlightedId === String(item.uuid)}
+                                liked={liked.includes(String(item.uuid))}
+                                onOpen={setExpandedId}
+                                onLike={like}
+                              />
+                            ))}
                           </div>
-                        )}
-                      </div>
-                    );
-                  }
-                )}
+                        </div>
+                      )}
+
+                      {row.type === "loader" && (
+                        <div className="virtual_loading_more">
+                          {loadingMore ? "Đang tải thêm..." : ""}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
 
-              <div
-                aria-hidden="true"
-                style={{
-                  textAlign: "center",
-                  color: "var(--text-muted)",
-                  fontSize: "0.78rem",
-                  marginTop: 8
-                }}
-              >
+              <div className="confession_count_footer" aria-hidden="true">
                 {totalCount > 0
                   ? `${confessions.length.toLocaleString("vi-VN")} / ${totalCount.toLocaleString("vi-VN")} confession(s)`
                   : ""}

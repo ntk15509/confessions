@@ -69,8 +69,7 @@ export default function Announcements({
               <ConfessionCard
                 key={item.uuid}
                 confession={item}
-                isModal={false}
-                expanded={false}
+                isAnnouncement={true}
                 liked={liked.includes(String(item.uuid))}
                 onOpen={onOpen}
                 onLike={onLike}

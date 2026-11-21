@@ -4,6 +4,8 @@ import { formatTime } from "../utils";
 export default function ConfessionCard({
   confession,
   liked,
+  highlighted,
+  isAnnouncement,
   onOpen,
   onLike
 }) {
@@ -29,14 +31,15 @@ export default function ConfessionCard({
 
   return (
     <div
-      className={`box${important ? " announcement_box" : ""}`}
+      id={isAnnouncement ? `announcement-${confession.uuid}` : `confession-feed-${confession.uuid}`}
+      className={`box${important ? " announcement_box" : ""}${highlighted ? " highlighted_cfs" : ""}`}
       role="button"
       tabIndex={0}
       onKeyDown={handleKeyDown}
       onClick={() => onOpen(confession.uuid)}
     >
       <div className="confession_title">
-        {important ? "📢 Thông báo" : `Confession #${String(confession.number || 0).padStart(3, "0")}`}
+        {important ? "📢 " : ""}Confession #{String(confession.number || 0).padStart(3, "0")}
       </div>
 
       <div className="confession_content">
@@ -72,18 +75,16 @@ export default function ConfessionCard({
           <span className="heart_count">{confession.likes || 0}</span>
         </button>
 
-        {!important && (
-          <button
-            type="button"
-            className="comment_toggle"
-            onClick={(event) => {
-              event.stopPropagation();
-              onOpen(confession.uuid);
-            }}
-          >
-            💬 Bình luận ({confession.commentCount || 0})
-          </button>
-        )}
+        <button
+          type="button"
+          className="comment_toggle"
+          onClick={(event) => {
+            event.stopPropagation();
+            onOpen(confession.uuid);
+          }}
+        >
+          💬 Bình luận ({confession.commentCount || 0})
+        </button>
       </div>
     </div>
   );

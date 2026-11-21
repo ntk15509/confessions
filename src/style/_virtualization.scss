@@ -1,44 +1,15 @@
 @use "variables" as *;
 
-.virtual_date_header {
-  background: var(--card-bg);
-  border: 2px solid var(--card-border);
-  border-radius: var(--radius-lg);
-  padding: 12px 20px;
-  box-shadow: var(--shadow-sm);
-
-  font-size: 0.98rem;
-  font-weight: 700;
-  color: var(--text-main);
-
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.virtual_card_row {
-  width: 100%;
-  min-width: 0;
-
-  display: grid;
-  gap: 16px;
-  align-items: stretch;
-}
-
-
-.virtual_confession_list {
-  width: 100%;
-  min-width: 0;
+.virtual_container {
   position: relative;
-}
-
-.virtual_confession_row {
   width: 100%;
-  min-width: 0;
 }
 
-.virtual_confession_row > .date_block {
-  margin-bottom: 0;
+.virtual_row_item {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  padding-bottom: 22px;
 }
 
 .virtual_loading_more {
@@ -48,4 +19,11 @@
   min-height: 48px;
   color: var(--text-muted);
   font-size: 0.85rem;
+}
+
+.confession_count_footer {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  margin-top: 8px;
 }

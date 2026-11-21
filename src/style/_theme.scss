@@ -29,13 +29,7 @@
   --shadow-md: #{$shadow-md-dark};
 
   #chu_thich {
-    background: rgba(159, 18, 57, 0.2);
-    border-color: #9f1239;
     color: #fecdd3;
-
-    mark {
-      color: #fda4af;
-    }
   }
 
   #confession_input,
@@ -64,6 +58,22 @@
       background: #4c0519;
       color: #fda4af;
       border-color: $primary-color;
+    }
+
+    &.highlighted_cfs {
+      border-color: $primary-color !important;
+      animation: pulseHighlightDark 1.8s ease-in-out infinite;
+    }
+  }
+
+  @keyframes pulseHighlightDark {
+    0%, 100% {
+      box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.4), 0 6px 20px rgba(244, 63, 94, 0.3);
+      transform: translateY(-2px);
+    }
+    50% {
+      box-shadow: 0 0 0 6px rgba(244, 63, 94, 0.7), 0 10px 30px rgba(244, 63, 94, 0.5);
+      transform: translateY(-4px);
     }
   }
 

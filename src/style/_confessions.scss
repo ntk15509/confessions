@@ -69,6 +69,22 @@
     color: $primary-hover;
     border-color: #fecdd3;
   }
+
+  &.highlighted_cfs {
+    border-color: $primary-hover !important;
+    animation: pulseHighlight 1.8s ease-in-out infinite;
+  }
+}
+
+@keyframes pulseHighlight {
+  0%, 100% {
+    box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.4), 0 6px 20px rgba(244, 63, 94, 0.25);
+    transform: translateY(-2px);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(244, 63, 94, 0.7), 0 10px 30px rgba(244, 63, 94, 0.45);
+    transform: translateY(-4px);
+  }
 }
 
 .confession_title {
@@ -208,10 +224,6 @@
     box-shadow: none;
     padding: 0;
 
-    &.announcement_modal {
-      width: min(620px, 94vw);
-    }
-
     .modal_box {
       background: var(--card-bg);
       border: 2px solid var(--card-border);
@@ -292,12 +304,6 @@
       }
     }
 
-    /* Single pane announcement modal close button */
-    &.announcement_modal .confession_pane .pane_close_btn {
-      display: flex;
-      position: static;
-    }
-
     .comments_pane {
       flex: 0.85;
       padding: 20px 20px 16px;
@@ -371,10 +377,6 @@
     justify-content: space-between;
     overflow: hidden;
 
-    &.announcement_modal {
-      border-color: var(--primary-color);
-    }
-
     .modal_box {
       background: transparent !important;
       border: none !important;
@@ -401,6 +403,8 @@
         align-items: center;
         justify-content: flex-start;
         margin-bottom: 8px;
+
+
       }
 
       .pane_close_btn {
@@ -476,4 +480,10 @@
       }
     }
   }
+}
+
+.empty_status_message {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 20px;
 }
