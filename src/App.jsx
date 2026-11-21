@@ -832,19 +832,17 @@ export default function App() {
 
 
           {/* contact */}
-            <div className="contact_block">
-            <span className="contact_label">
-              <i className="fa-regular fa-envelope" aria-hidden="true" />
-              Contact
-            </span>
-            <a
-              className="contact_mail"
-              href="https://mail.google.com/mail/?view=cm&fs=1&to=cfs.workcontact@gmail.com"
-              target="_blank"
-              rel="noopener noreferrer" > cfs.workcontact@gmail.com 
-            </a>
-          </div>
-
+          <a
+            className="contact_us_btn"
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=cfs.workcontact@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="cfs.workcontact@gmail.com"
+          >
+            <i className="fa-regular fa-envelope" aria-hidden="true" />
+            <span>Contact us</span>
+            <i className="fa-solid fa-arrow-right contact_arrow" aria-hidden="true" />
+          </a>
         </header>
 
         <Announcements
