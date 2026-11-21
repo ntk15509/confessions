@@ -27,6 +27,15 @@ const readmeMarkdownParser = new MarkdownIt({
   linkify: true
 });
 
+function slugifyHeading(value) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
 function getColumnCount() {
   if (typeof window === "undefined") return 3;
   if (window.innerWidth >= 1100) return 3;
@@ -703,6 +712,56 @@ export default function App() {
     getItemKey: index => virtualRows[index]?.key ?? index
   });
 
+  const readmeDocument = useMemo(() => {
+    const sections = [];
+    const usedIds = new Set();
+
+    const html = readmeMarkdownParser.render(readmeMarkdownContent)
+      .replace(
+        /<h3>([\s\S]*?)<\/h3>/g,
+        (match, inner) => {
+  const headingText = inner
+    .replace(/<[^>]*>/g, "")
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">");
+
+  const baseId = slugifyHeading(headingText) || "section";
+  let id = baseId;
+  let suffix = 2;
+
+  while (usedIds.has(id)) {
+    id = `${baseId}-${suffix++}`;
+  }
+
+  usedIds.add(id);
+  sections.push({ id, title: headingText });
+
+  return `<h3 id="${id}">${inner}</h3>`;
+}
+      );
+
+    return { html, sections };
+  }, []);
+
+  const scrollToReadmeSection = useCallback((id) => {
+    const target = document.getElementById(id);
+    const container = document.querySelector(".readme_body");
+
+    if (!target || !container) return;
+
+    const top =
+      target.getBoundingClientRect().top -
+      container.getBoundingClientRect().top +
+      container.scrollTop;
+
+    container.scrollTo({
+      top: top - 16,
+      behavior: "smooth"
+    });
+  }, []);
   const virtualItems = virtualizer.getVirtualItems();
 
   useEffect(() => {
@@ -1168,6 +1227,7 @@ export default function App() {
       <Modal
         open={readmeOpen}
         onClose={() => setReadmeOpen(false)}
+        className="readme_modal_shell"
       >
         <button
           type="button"
@@ -1187,12 +1247,40 @@ export default function App() {
           Hướng dẫn sử dụng & Giới thiệu
         </h2>
 
-        <div
-          className="readme_body"
-          dangerouslySetInnerHTML={{
-            __html: readmeMarkdownParser.render(readmeMarkdownContent)
-          }}
-        />
+        <div className="readme_layout">
+          <nav
+            className="readme_toc"
+            aria-label="Table of contents"
+          >
+            <div className="readme_toc_header">
+              <i className="fa-solid fa-list" />
+              <span>Mục lục</span>
+            </div>
+
+            <div className="readme_toc_list">
+              {readmeDocument.sections.map((section, index) => (
+                <button
+                  key={section.id}
+                  type="button"
+                  className={`readme_toc_item readme_toc_level_${section.level}`}
+                  onClick={() => scrollToReadmeSection(section.id)}
+                  title={section.title}
+                >
+                  <span className="readme_toc_label">
+                    {section.title}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </nav>
+
+          <div
+            className="readme_body"
+            dangerouslySetInnerHTML={{
+              __html: readmeDocument.html
+            }}
+          />
+        </div>
 
         <button
           type="button"

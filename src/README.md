@@ -50,12 +50,12 @@ Bạn vẫn có thể phản biện, phê bình hoặc đưa ra quan điểm kh�
 
 ### 📮 3. Về gửi confession
 
-Có điều gì muốn chia sẻ? Bạn có thể gửi confession chỉ với vài thao tác đơn giản:
+Bạn có thể gửi confession chỉ với vài thao tác đơn giản:
 
-1. Mở khu vực **Gửi Confession** trên giao diện.
-2. Nhập nội dung mà bạn muốn chia sẻ.
-3. Đọc lại một lượt để chắc chắn mọi thứ đã ổn.
-4. Nhấn **Gửi bài** để hoàn tất.
+- Mở khu vực **Gửi Confession** trên giao diện.
+- Nhập nội dung mà bạn muốn chia sẻ.
+- Đọc lại một lượt để chắc chắn mọi thứ đã ổn.
+- Nhấn **Gửi bài** để hoàn tất.
 
 Sau khi gửi, confession sẽ được chuyển sang trạng thái chờ kiểm duyệt. Bài viết sẽ xuất hiện công khai sau khi được xử lý theo quy trình kiểm duyệt của nền tảng.
 
@@ -164,8 +164,6 @@ Bạn có thể trình bày theo cách tương tự, miễn là thông tin đủ
 Quản trị viên có thể xem xét những nội dung được gửi và thực hiện các biện pháp xử lý phù hợp theo quy trình quản lý của nền tảng.
 
 Khi sử dụng NHSC Confessions, bạn được hiểu là đã đọc và đồng ý tuân thủ những nguyên tắc trên.
-
----
 
 <div class="project_author">
   <span>A project by</span>
