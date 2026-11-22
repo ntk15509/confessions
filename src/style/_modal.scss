@@ -372,6 +372,45 @@
   }
 }
 
+.readme_toc_toggle_btn,
+.readme_toc_close_btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 50%;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* same look as .feedback_toggle_btn */
+.readme_toc_toggle_btn {
+  color: #ffffff;
+  background: linear-gradient(135deg, $accent-color, $accent-hover);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
+  }
+}
+
+/* same look as .close_readme_btn */
+.readme_toc_close_btn {
+  background: #e2e8f0;
+  color: var(--text-main);
+
+  &:hover {
+    background: $primary-color;
+    color: #ffffff;
+    transform: scale(1.1);
+  }
+}
+
 @media (max-width: 699px) {
   .readme_modal_shell {
     width: 100%;
@@ -379,6 +418,22 @@
     max-height: 92vh;
     padding: 20px 15px;
     gap: 12px;
+
+    > h2 {
+      padding-right: 78px;
+    }
+  }
+
+  .readme_toc_toggle_btn {
+    display: flex;
+    position: absolute;
+    top: 20px;
+    right: 60px;
+  }
+
+  .readme_toc_close_btn {
+    display: flex;
+    margin-left: auto;
   }
 
   .readme_layout {
@@ -387,14 +442,23 @@
     gap: 12px;
   }
 
+  /* TOC is hidden by default and opens as an overlay above the README modal */
   .readme_toc {
-    flex: 0 0 auto;
-    max-height: 20vh;
-    overflow: hidden;
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+
+    &.open {
+      display: flex;
+    }
   }
 
   .readme_toc_list {
     display: flex;
+    flex: 1;
     flex-direction: column;
     gap: 3px;
     padding: 7px;

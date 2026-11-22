@@ -84,6 +84,7 @@ export default function App() {
   const [search, setSearch] = useState("");
   const [dateSearch, setDateSearch] = useState("");
   const [readmeOpen, setReadmeOpen] = useState(false);
+  const [tocOpen, setTocOpen] = useState(false);
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [feedback, setFeedback] = useState("");
   const [feedbackError, setFeedbackError] = useState("");
@@ -134,6 +135,10 @@ export default function App() {
       document.body.classList.remove("confession-modal-open");
     };
   }, [expandedId, readmeOpen, feedbackOpen]);
+
+  useEffect(() => {
+    if (!readmeOpen) setTocOpen(false);
+  }, [readmeOpen]);
 
   useEffect(() => {
     const handleGlobalKeyDown = (event) => {
@@ -1239,6 +1244,17 @@ export default function App() {
           <i className="fa-solid fa-xmark" />
         </button>
 
+        <button
+          type="button"
+          className="readme_toc_toggle_btn"
+          title="Mục lục"
+          aria-label="Mở mục lục"
+          aria-expanded={tocOpen}
+          onClick={() => setTocOpen(true)}
+        >
+          <i className="fa-solid fa-list" />
+        </button>
+
         <h2>
           <i
             className="fa-solid fa-book-open"
@@ -1249,12 +1265,21 @@ export default function App() {
 
         <div className="readme_layout">
           <nav
-            className="readme_toc"
+            className={`readme_toc${tocOpen ? " open" : ""}`}
             aria-label="Table of contents"
           >
             <div className="readme_toc_header">
               <i className="fa-solid fa-list" />
               <span>Mục lục</span>
+              <button
+                type="button"
+                className="readme_toc_close_btn"
+                title="Đóng mục lục"
+                aria-label="Đóng mục lục"
+                onClick={() => setTocOpen(false)}
+              >
+                <i className="fa-solid fa-xmark" />
+              </button>
             </div>
 
             <div className="readme_toc_list">
@@ -1263,7 +1288,10 @@ export default function App() {
                   key={section.id}
                   type="button"
                   className={`readme_toc_item readme_toc_level_${section.level}`}
-                  onClick={() => scrollToReadmeSection(section.id)}
+                  onClick={() => {
+                    scrollToReadmeSection(section.id);
+                    setTocOpen(false);
+                  }}
                   title={section.title}
                 >
                   <span className="readme_toc_label">
