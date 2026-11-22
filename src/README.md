@@ -142,7 +142,6 @@ Bạn có thể trình bày theo cách tương tự, miễn là thông tin đủ
 #### Một số lưu ý nhỏ
 
 - Hãy kiểm tra kỹ ID và thời gian đăng bài trước khi gửi để tránh nhầm lẫn.
-- Nếu không nhớ chính xác thời gian đăng, bạn có thể cung cấp những thông tin khác giúp xác định bài viết.
 - Không sử dụng chức năng này để quấy rối, gây áp lực hoặc cố tình can thiệp vào confession của người khác.
 - Không gửi yêu cầu giả mạo, sai sự thật hoặc spam yêu cầu xoá.
 - Mỗi yêu cầu sẽ được xem xét dựa trên tình huống cụ thể.
