@@ -725,27 +725,27 @@ export default function App() {
       .replace(
         /<h3>([\s\S]*?)<\/h3>/g,
         (match, inner) => {
-  const headingText = inner
-    .replace(/<[^>]*>/g, "")
-    .replace(/&amp;/g, "&")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">");
+          const headingText = inner
+            .replace(/<[^>]*>/g, "")
+            .replace(/&amp;/g, "&")
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, "'")
+            .replace(/&lt;/g, "<")
+            .replace(/&gt;/g, ">");
 
-  const baseId = slugifyHeading(headingText) || "section";
-  let id = baseId;
-  let suffix = 2;
+          const baseId = slugifyHeading(headingText) || "section";
+          let id = baseId;
+          let suffix = 2;
 
-  while (usedIds.has(id)) {
-    id = `${baseId}-${suffix++}`;
-  }
+          while (usedIds.has(id)) {
+            id = `${baseId}-${suffix++}`;
+          }
 
-  usedIds.add(id);
-  sections.push({ id, title: headingText });
+          usedIds.add(id);
+          sections.push({ id, title: headingText });
 
-  return `<h3 id="${id}">${inner}</h3>`;
-}
+          return `<h2 id="${id}">${inner}</h2>`;
+        }
       );
 
     return { html, sections };

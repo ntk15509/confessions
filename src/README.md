@@ -1,4 +1,4 @@
-### 🔒 1. Về tính ẩn danh và quyền riêng tư
+### 1. Về tính ẩn danh và quyền riêng tư
 
 NHSC Confessions được xây dựng để bạn có thể gửi confession mà không cần cung cấp tên, email hay tài khoản cá nhân. Thông tin người gửi cũng không được hiển thị công khai cùng với bài viết hoặc bình luận.
 
@@ -16,7 +16,7 @@ Vì vậy, hãy suy nghĩ kỹ trước khi chia sẻ thông tin cá nhân, dù 
 
 Chúng mình luôn hướng đến việc bảo vệ quyền riêng tư và tạo ra một không gian chia sẻ ẩn danh. Tuy nhiên, NHSC Confessions không thể cam kết tính ẩn danh tuyệt đối hoặc kiểm soát hoàn toàn dữ liệu do các dịch vụ bên thứ ba xử lý.
 
-### 📝 2. Về nội dung bài viết
+### 2. Về nội dung bài viết
 
 #### Quyền tự do chia sẻ
 
@@ -48,7 +48,7 @@ Bạn vẫn có thể phản biện, phê bình hoặc đưa ra quan điểm kh�
 
 **Tự do chia sẻ là quyền của mỗi người, và sử dụng quyền đó một cách có trách nhiệm cũng quan trọng không kém.**
 
-### 📮 3. Về gửi confession
+### 3. Gửi confession
 
 Bạn có thể gửi confession chỉ với vài thao tác đơn giản:
 
@@ -66,7 +66,7 @@ Sau khi gửi, confession sẽ được chuyển sang trạng thái chờ kiểm
 - Tránh gửi nội dung trùng lặp hoặc spam.
 - Nếu bài viết chưa xuất hiện ngay, hãy kiên nhẫn chờ quá trình kiểm duyệt.
 
-### 🔍 4. Tìm kiếm confession
+### 4. Tìm kiếm confession
 
 Muốn tìm lại một confession nào đó? Bạn có thể sử dụng chức năng tìm kiếm theo mã số hoặc ngày đăng.
 
@@ -80,7 +80,7 @@ Nhập ngày đăng theo định dạng ngày/tháng/năm, ví dụ `26/07/2026`
 
 Hệ thống sẽ hiển thị những bài viết phù hợp với thông tin bạn tìm kiếm.
 
-### 💬 5. Bình luận và tương tác
+### 5. Bình luận và tương tác
 
 Một confession sẽ thú vị hơn khi có thêm những góc nhìn và phản hồi từ mọi người!
 
@@ -101,13 +101,13 @@ Bạn có thể:
 
 Một cuộc thảo luận không cần mọi người có cùng quan điểm mới trở nên có ý nghĩa. Đôi khi, biết lắng nghe một góc nhìn khác cũng là điều rất đáng quý.
 
-### 🚨 6. Thông báo và confession quan trọng
+### 6. Thông báo và confession quan trọng
 
 Đôi khi sẽ có những bài viết hoặc thông tin cần được mọi người chú ý hơn.
 
 Các confession được quản trị viên đánh dấu là quan trọng sẽ xuất hiện trong khu vực thông báo nổi bật, giúp bạn dễ dàng nhận biết và theo dõi.
 
-### 💡 7. Gửi góp ý và báo lỗi
+### 7. Gửi góp ý và báo lỗi
 
 NHSC Confessions luôn có thể tốt hơn, và những góp ý từ bạn là một phần quan trọng giúp chúng mình cải thiện nền tảng.
 
@@ -123,7 +123,7 @@ Bạn có thể gửi góp ý về:
 
 Mọi góp ý đều được trân trọng. Tuy nhiên, việc tiếp nhận, xem xét và phản hồi sẽ phụ thuộc vào quá trình xử lý của quản trị viên.
 
-### 🗑️ 8. Về yêu cầu xoá confession
+### 8. Yêu cầu xoá confession
 
 Đôi khi, bạn có thể muốn gỡ bỏ một confession đã đăng vì một lý do nào đó. Nếu gặp trường hợp này, bạn có thể gửi yêu cầu thông qua chức năng **Gửi Confession**.
 
@@ -149,7 +149,7 @@ Bạn có thể trình bày theo cách tương tự, miễn là thông tin đủ
 
 **Việc gửi yêu cầu không đồng nghĩa với việc confession chắc chắn sẽ bị xoá.** Quản trị viên sẽ xem xét thông tin được cung cấp và quyết định hướng xử lý phù hợp.
 
-### ⚠️ 9. Trách nhiệm và nguyên tắc sử dụng
+### 9. Trách nhiệm và nguyên tắc sử dụng
 
 Để NHSC Confessions luôn là một nơi chia sẻ tích cực, chúng mình mong mỗi người dùng cùng lưu ý một vài điều:
 
