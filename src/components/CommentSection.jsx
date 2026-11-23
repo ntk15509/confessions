@@ -18,6 +18,7 @@ export default function CommentSection({
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(false);
   const emojiWrapperRef = useRef(null);
+   const listEndRef = useRef(null);
 
   useEffect(() => {
     if (confession.comments === null) {
@@ -74,6 +75,11 @@ export default function CommentSection({
       setInput("");
       setSelectedGif(null);
       setActivePicker(null);
+
+      setTimeout(() => {
+        listEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+      }, 100);
+
     } finally {
       setSubmitting(false);
     }
@@ -116,6 +122,7 @@ export default function CommentSection({
         ) : (
           <p className="comment_status">Chưa có bình luận nào.</p>
         )}
+        <div ref={listEndRef} aria-hidden="true" />
       </div>
 
       <div className="comment_form_wrapper" ref={emojiWrapperRef}>
