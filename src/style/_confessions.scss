@@ -366,7 +366,7 @@
   /* ========================================================================
      Small Screens (< 860px): Old Layout with Modern Neutral Styling (No Red)
      ======================================================================== */
-  @media (max-width: 859px) {
+ /* @media (max-width: 859px) {
     --confession-card-height: min(600px, 95vh);
     width: 600px;
     max-width: 95vw;
@@ -486,5 +486,175 @@
         }
       }
     }
+  }*/
+
+    /* ========================================================================
+     Small Screens (< 860px): MỘT vùng cuộn duy nhất (kiểu Facebook)
+     - Header dính trên, ô nhập bình luận dính dưới
+     - Bài viết + lượt thích + bình luận cuộn chung trong wrapper
+     ======================================================================== */
+  @media (max-width: 859px) {
+    --confession-card-height: min(600px, 95vh);
+    width: 600px;
+    max-width: 95vw;
+    height: var(--confession-card-height);
+    max-height: 95vh;
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    @include custom-scrollbar(4px);
+
+    /* dvh: tránh thanh địa chỉ trình duyệt che mất ô nhập ở đáy */
+    @supports (height: 100dvh) {
+      --confession-card-height: min(600px, 95dvh);
+      max-height: 95dvh;
+    }
+
+    &.announcement_modal {
+      border-color: var(--primary-color);
+    }
+
+    .modal_box {
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+    }
+
+    /* Gộp các pane: con của chúng trở thành phần tử trực tiếp của wrapper */
+    .confession_pane,
+    .comments_pane,
+    .comments_pane_body,
+    .comments_pane_body .comments_section {
+      display: contents;
+    }
+
+    .confession_pane {
+      &.announcement_box .confession_title {
+        background: #ffe4e6;
+        color: $primary-hover;
+        border-color: #fecdd3;
+      }
+
+      /* Header: dính trên cùng */
+      .modal_pane_header {
+        position: sticky;
+        top: 0;
+        z-index: 3;
+        flex: none;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        height: 56px;
+        padding: 0 60px 0 18px;
+        background: var(--card-bg);
+        border-bottom: 1px solid var(--card-border);
+
+        .confession_title {
+          margin: 0;
+        }
+      }
+
+      .pane_close_btn {
+        position: absolute;
+        top: 12px;
+        right: 14px;
+        display: flex !important;
+        z-index: 1000;
+      }
+
+      /* Nội dung bài: không còn cuộn riêng */
+      .modal_content_scroll {
+        flex: none;
+        min-height: auto;
+        overflow: visible;
+        padding: 14px 18px 18px;
+
+        p {
+          font-size: 1.1rem;
+          line-height: 1.7;
+          color: var(--text-main);
+          white-space: pre-wrap;
+          word-break: break-word;
+          display: block;
+          -webkit-line-clamp: unset;
+          overflow: visible;
+        }
+      }
+
+      /* Thời gian + lượt thích + số bình luận: cuộn cùng bài */
+      .modal_pane_footer {
+        flex: none;
+        padding: 0 18px 12px;
+        border-bottom: 1px solid var(--card-border);
+
+        .confession_meta {
+          margin-top: 0;
+          padding-top: 10px;
+          border-top: 1.5px dashed var(--card-border);
+        }
+
+        .confession_actions {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          margin-top: 8px;
+        }
+
+        .comment_count_badge {
+          font-size: 0.85rem;
+          font-weight: 600;
+          color: var(--text-muted);
+        }
+      }
+
+      &.announcement_box .modal_pane_footer {
+        border-bottom: none;
+      }
+    }
+
+    .comments_pane {
+      .comments_pane_header {
+        display: none !important;
+      }
+
+      .comments_pane_body .comments_section {
+        /* Danh sách bình luận: cuộn chung, không giới hạn chiều cao */
+        .comment_list {
+          flex: none;
+          min-height: auto;
+          max-height: none;
+          overflow: visible;
+          margin: 0;
+          padding: 12px 18px 16px;
+        }
+
+        /* Ô nhập: dính dưới cùng */
+        .comment_form_wrapper {
+          position: sticky;
+          bottom: 0;
+          z-index: 3;
+          margin-top: auto;
+          padding: 10px 18px 14px;
+          background: var(--card-bg);
+          border-top: 1px solid var(--card-border);
+        }
+
+        .comment_emoji_container {
+          left: 18px;
+          right: 18px;
+        }
+      }
+    }
   }
-}
+
+} 
+
