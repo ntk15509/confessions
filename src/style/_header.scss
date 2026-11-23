@@ -1,25 +1,19 @@
 @use "variables" as *;
 
 .hero_section {
-  background: var(--card-bg);
-  border: 2px solid var(--card-border);
-  border-radius: var(--radius-lg);
-  padding: 28px 24px;
-  box-shadow: var(--shadow-md);
+  @include surface-card;
+  padding: $space-7 $space-6;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 16px;
+  gap: $space-4;
   position: relative;
 }
 
 .card_wrapper {
-  background: var(--card-bg);
-  border: 2px solid var(--card-border);
-  border-radius: var(--radius-lg);
-  padding: 22px 24px;
-  box-shadow: var(--shadow-md);
+  @include surface-card;
+  padding: $space-5 $space-6;
   min-width: 0;
 }
 
@@ -28,16 +22,16 @@
   position: absolute;
   top: 20px;
   border: none;
-  padding: 8px 16px;
-  border-radius: 20px;
+  padding: $space-2 $space-4;
+  border-radius: var(--radius-pill);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: $space-2;
   cursor: pointer;
   color: #ffffff;
   font-weight: 600;
   font-size: 0.85rem;
-  transition: all 0.2s ease;
+  transition: transform $transition, box-shadow $transition, background $transition;
   z-index: 10;
 
   &:hover {

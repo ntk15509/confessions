@@ -7,13 +7,28 @@
   --bg-gradient: #{$bg-gradient-light};
   --card-bg: #{$card-bg-light};
   --card-border: #{$card-border-light};
+  --surface-subtle: #{$surface-subtle-light};
+  --input-bg: #{$input-bg-light};
   --text-main: #{$text-main-light};
   --text-muted: #{$text-muted-light};
   --shadow-sm: #{$shadow-sm-light};
   --shadow-md: #{$shadow-md-light};
+  --shadow-lg: #{$shadow-lg-light};
   --radius-lg: #{$radius-lg};
   --radius-md: #{$radius-md};
   --radius-sm: #{$radius-sm};
+  --radius-pill: #{$radius-pill};
+  --focus-ring: #{$focus-ring};
+  --title-chip-bg: #e2e8f0;
+  --title-chip-color: #{$text-main-light};
+  --title-chip-border: #{$card-border-light};
+  --announcement-chip-bg: #ffe4e6;
+  --announcement-chip-color: #{$primary-hover};
+  --announcement-chip-border: #fecdd3;
+  --heart-liked-bg: #ffe4e6;
+  --heart-liked-border: #{$primary-color};
+  --heart-liked-color: #{$primary-hover};
+  --close-btn-bg: #e2e8f0;
 }
 
 [data-theme="dark"] {
@@ -23,47 +38,30 @@
   --bg-gradient: #{$bg-gradient-dark};
   --card-bg: #{$card-bg-dark};
   --card-border: #{$card-border-dark};
+  --surface-subtle: #{$surface-subtle-dark};
+  --input-bg: #{$input-bg-dark};
   --text-main: #{$text-main-dark};
   --text-muted: #{$text-muted-dark};
   --shadow-sm: #{$shadow-sm-dark};
   --shadow-md: #{$shadow-md-dark};
+  --shadow-lg: #{$shadow-lg-dark};
+  --title-chip-bg: #334155;
+  --title-chip-color: #f1f5f9;
+  --title-chip-border: #{$card-border-dark};
+  --announcement-chip-bg: #4c0519;
+  --announcement-chip-color: #fda4af;
+  --announcement-chip-border: #{$primary-color};
+  --heart-liked-bg: #4c0519;
+  --heart-liked-border: #{$primary-color};
+  --heart-liked-color: #fda4af;
+  --close-btn-bg: #334155;
 
   #chu_thich {
     color: #fecdd3;
   }
 
-  #confession_input,
-  #search_input,
-  #search_date_input,
-  .comment_input {
-    background: #0f172a;
-    border-color: $card-border-dark;
-    color: #f1f5f9;
-
-    &:focus {
-      background: #0f172a;
-      border-color: var(--accent-color);
-    }
-  }
-
-  .box {
-    background: #111827;
-    border-color: #334155;
-
-    &:hover {
-      border-color: #64748b;
-    }
-
-    &.announcement_box .confession_title {
-      background: #4c0519;
-      color: #fda4af;
-      border-color: $primary-color;
-    }
-
-    &.highlighted_cfs {
-      border-color: $primary-color !important;
-      animation: pulseHighlightDark 1.8s ease-in-out infinite;
-    }
+  .box.highlighted_cfs {
+    animation: pulseHighlightDark 1.8s ease-in-out infinite;
   }
 
   @keyframes pulseHighlightDark {
@@ -74,163 +72,6 @@
     50% {
       box-shadow: 0 0 0 6px rgba(244, 63, 94, 0.7), 0 10px 30px rgba(244, 63, 94, 0.5);
       transform: translateY(-4px);
-    }
-  }
-
-  .confession_pane.announcement_box .confession_title {
-      background: #4c0519;
-      color: #fda4af;
-      border-color: var(--primary-color);
-    }
-
-  @media (min-width: 860px) {
-    .confession_modal_wrapper {
-      background: transparent;
-      border: none;
-
-      .modal_box {
-        background: $card-bg-dark;
-        border-color: #334155;
-      }
-
-      .comments_pane_header {
-        border-bottom-color: #334155;
-      }
-
-      .modal_pane_footer .confession_meta {
-        border-top-color: #334155;
-      }
-    }
-  }
-
-  .comment_count_badge {
-    color: $text-muted-dark;
-  }
-
-  .confession_title {
-    background: #334155;
-    color: #f1f5f9;
-    border-color: $card-border-dark;
-  }
-
-  .confession_content p,
-  .date_block_header {
-    color: #cbd5e1;
-  }
-
-  .date_block_header,
-  .confession_meta {
-    border-color: #334155;
-  }
-
-  .comments_section {
-    border-top-color: #334155;
-  }
-
-  .heart_btn {
-    background: $card-bg-dark;
-    border-color: $card-border-dark;
-    color: #cbd5e1;
-
-    &.liked {
-      background: #4c0519;
-      border-color: $primary-color;
-      color: #fda4af;
-    }
-  }
-
-  .comment_item {
-    background: #0f172a;
-    border-color: #334155;
-    color: #cbd5e1;
-  }
-
-  .emoji_toggle_btn.inside_input {
-    color: $text-muted-dark;
-
-    &:hover {
-      color: var(--accent-color);
-    }
-  }
-
-  .emoji_picker_container {
-    background: #0f172a;
-    border-color: $card-border-dark;
-  }
-
-  .emoji_item {
-    background: $card-bg-dark;
-    border-color: #334155;
-
-    &:hover {
-      background: #334155;
-      border-color: #64748b;
-    }
-  }
-
-  .close_modal_btn,
-  .close_readme_btn {
-    background: #334155;
-    color: #f1f5f9;
-
-    &:hover {
-      background: $primary-color;
-      color: #ffffff;
-    }
-  }
-
-  .comment_emoji_btn {
-    background: #0f172a;
-    border-color: $card-border-dark;
-    color: $text-muted-dark;
-
-    &:hover {
-      background: $card-bg-dark;
-      border-color: var(--accent-color);
-      color: var(--accent-color);
-    }
-  }
-
-  .readme_modal_content h2 {
-    border-bottom-color: #334155;
-  }
-
-  .readme_body code {
-    background: #0f172a;
-  }
-
-  .project_author {
-    border-top-color: #334155;
-  }
-
-  #feedback_input {
-    border-color: $card-border-dark;
-    background: #0f172a;
-  }
-
-  .announcement_accordion {
-    background: $card-bg-dark;
-    border-color: $card-border-dark;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  }
-
-  .announcement_toggle_btn {
-    color: var(--text-main);
-
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.05);
-    }
-  }
-
-  .carousel_btn {
-    background: $card-bg-dark;
-    border-color: $card-border-dark;
-    color: var(--text-main);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-
-    &:hover {
-      background-color: var(--primary-color);
-      color: #ffffff;
     }
   }
 }

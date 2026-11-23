@@ -38,8 +38,8 @@
 }
 
 .comment_item {
-  background: #ffffff;
-  border: 1.5px solid $card-border-light;
+  background: var(--input-bg);
+  border: $border-width solid var(--card-border);
   border-radius: var(--radius-sm);
   padding: 8px 12px;
   font-size: 0.85rem;
@@ -116,25 +116,17 @@
 }
 
 .comment_input {
+  @include control-field;
   flex: 1;
   padding: 8px 12px;
-  font-family: inherit;
   font-size: 0.85rem;
   line-height: 1.4;
-  border: 1.5px solid $card-border-light;
   border-radius: var(--radius-sm);
-  outline: none;
-  background: #ffffff;
   resize: none;
   height: 40px;
   max-height: 40px;
   overflow-y: auto;
-  transition: border-color 0.2s;
   @include custom-scrollbar(4px);
-
-  &:focus {
-    border-color: var(--accent-color);
-  }
 
   @media (max-width: 640px) {
     font-size: 16px;
@@ -145,17 +137,17 @@
   height: 40px;
   padding: 0 10px;
   font-size: 1rem;
-  background: #f1f5f9;
-  border: 1.5px solid $card-border-light;
+  background: var(--surface-subtle);
+  border: $border-width solid var(--card-border);
   border-radius: var(--radius-sm);
   color: var(--text-muted);
   cursor: pointer;
   @include flex-center;
-  transition: all 0.2s;
+  transition: background $transition, border-color $transition, color $transition;
   flex-shrink: 0;
 
   &:hover {
-    background: #e2e8f0;
+    background: var(--card-bg);
     color: var(--accent-color);
     border-color: var(--accent-color);
   }
@@ -190,37 +182,21 @@
 }
 
 .comment_submit {
+  @include btn-primary;
   padding: 0 14px;
   font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  background: var(--accent-color);
-  color: #ffffff;
   border-radius: var(--radius-sm);
-  transition: background 0.2s;
   height: 40px;
   @include flex-center;
   flex-shrink: 0;
-
-  &:hover {
-    background: $accent-hover;
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
 }
 
 .giphy_picker_search {
+  @include control-field;
   width: 100%;
   min-height: 40px;
   padding: 8px 12px;
-  border: 1px solid $card-border-light;
   border-radius: var(--radius-sm);
-  background: var(--card-bg);
-  color: var(--text-main);
 }
 
 .giphy_picker_status {

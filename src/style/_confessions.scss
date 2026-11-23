@@ -3,33 +3,30 @@
 #confession_list {
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: $space-6;
 }
 
 .date_block {
-  background: var(--card-bg);
-  border: 2px solid var(--card-border);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  box-shadow: var(--shadow-md);
+  @include surface-card;
+  padding: $space-5;
   min-width: 0;
 
   &_header {
     font-size: 0.98rem;
     font-weight: 700;
     color: var(--text-main);
-    margin-bottom: 16px;
+    margin-bottom: $space-4;
     padding-bottom: 10px;
-    border-bottom: 2px solid var(--card-border);
+    border-bottom: $border-width-strong solid var(--card-border);
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: $space-2;
   }
 
   &_grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    gap: $space-4;
     align-items: stretch;
   }
 }
@@ -43,15 +40,15 @@
 }
 
 .box {
-  background: #f8fafc;
-  border: 2px solid $card-border-light;
+  background: var(--surface-subtle);
+  border: $border-width-strong solid var(--card-border);
   border-radius: var(--radius-md);
-  padding: 16px;
+  padding: $space-4;
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s ease;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s ease, box-shadow 0.25s ease;
   cursor: pointer;
   position: relative;
   min-width: 0;
@@ -60,18 +57,18 @@
 
   &:hover {
     transform: translateY(-2px);
-    border-color: #64748b;
-    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.1);
+    border-color: var(--text-muted);
+    box-shadow: var(--shadow-md);
   }
 
   &.announcement_box .confession_title {
-    background: #ffe4e6;
-    color: $primary-hover;
-    border-color: #fecdd3;
+    background: var(--announcement-chip-bg);
+    color: var(--announcement-chip-color);
+    border-color: var(--announcement-chip-border);
   }
 
   &.highlighted_cfs {
-    border-color: $primary-hover !important;
+    border-color: var(--primary-color) !important;
     animation: pulseHighlight 1.8s ease-in-out infinite;
   }
 }
@@ -90,14 +87,14 @@
 .confession_title {
   font-weight: 700;
   font-size: 0.92rem;
-  color: $text-main-light;
+  color: var(--title-chip-color);
   display: inline-block;
-  background: #e2e8f0;
+  background: var(--title-chip-bg);
   padding: 3px 10px;
-  border-radius: 20px;
+  border-radius: var(--radius-pill);
   margin-bottom: 6px;
   width: fit-content;
-  border: 1px solid $card-border-light;
+  border: 1px solid var(--title-chip-border);
 }
 
 .confession_content {
@@ -124,7 +121,7 @@
 .confession_meta {
   margin-top: 8px;
   padding-top: 6px;
-  border-top: 1.5px dashed $card-border-light;
+  border-top: $border-width dashed var(--card-border);
 }
 
 .confession_time {
@@ -141,9 +138,9 @@
 }
 
 .heart_btn {
-  background: #ffffff;
-  border: 1.5px solid $card-border-light;
-  border-radius: 20px;
+  background: var(--card-bg);
+  border: $border-width solid var(--card-border);
+  border-radius: var(--radius-pill);
   padding: 4px 12px;
   cursor: pointer;
   font-size: 0.88rem;
@@ -151,18 +148,18 @@
   align-items: center;
   gap: 6px;
   color: var(--text-muted);
-  transition: all 0.2s ease;
+  transition: background $transition, border-color $transition, color $transition, transform $transition;
 
   &:hover {
-    background: #fff1f2;
-    border-color: #fda4af;
+    background: var(--announcement-chip-bg);
+    border-color: var(--announcement-chip-border);
     transform: scale(1.05);
   }
 
   &.liked {
-    background: #ffe4e6;
-    border-color: $primary-color;
-    color: $primary-hover;
+    background: var(--heart-liked-bg);
+    border-color: var(--heart-liked-border);
+    color: var(--heart-liked-color);
   }
 }
 
@@ -242,9 +239,9 @@
       justify-content: space-between;
 
       &.announcement_box .confession_title {
-        background: #ffe4e6;
-        color: $primary-hover;
-        border-color: #fecdd3;
+        background: var(--announcement-chip-bg);
+        color: var(--announcement-chip-color);
+        border-color: var(--announcement-chip-border);
       }
 
       .modal_pane_header {
@@ -393,9 +390,9 @@
       justify-content: space-between;
 
       &.announcement_box .confession_title {
-        background: #ffe4e6;
-        color: $primary-hover;
-        border-color: #fecdd3;
+        background: var(--announcement-chip-bg);
+        color: var(--announcement-chip-color);
+        border-color: var(--announcement-chip-border);
       }
 
       .modal_pane_header {

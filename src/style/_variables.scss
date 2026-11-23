@@ -8,9 +8,14 @@ $bg-gradient-dark: linear-gradient(135deg, #0b0f19 0%, #111827 100%);
 
 $card-bg-light: #ffffff;
 $card-border-light: #cbd5e1;
+$surface-subtle-light: #f8fafc;
+$input-bg-light: #ffffff;
 
 $card-bg-dark: #1e293b;
 $card-border-dark: #475569;
+$surface-subtle-dark: #0f172a;
+$input-bg-dark: #0f172a;
+$border-subtle-dark: #334155;
 
 $text-main-light: #0f172a;
 $text-muted-light: #475569;
@@ -20,13 +25,32 @@ $text-muted-dark: #94a3b8;
 
 $shadow-sm-light: 0 2px 6px rgba(15, 23, 42, 0.05);
 $shadow-md-light: 0 10px 25px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.05);
+$shadow-lg-light: 0 20px 45px rgba(15, 23, 42, 0.18);
 
 $shadow-sm-dark: 0 2px 6px rgba(0, 0, 0, 0.3);
 $shadow-md-dark: 0 10px 25px -3px rgba(0, 0, 0, 0.5);
+$shadow-lg-dark: 0 20px 45px rgba(0, 0, 0, 0.45);
 
 $radius-lg: 20px;
 $radius-md: 12px;
 $radius-sm: 8px;
+$radius-pill: 999px;
+
+// Shared spacing scale (use these for padding / gap)
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 20px;
+$space-6: 24px;
+$space-7: 28px;
+$space-8: 32px;
+
+$border-width: 1.5px;
+$border-width-strong: 2px;
+$focus-ring: 0 0 0 3px rgba(99, 102, 241, 0.14);
+$transition-fast: 0.15s ease;
+$transition: 0.2s ease;
 
 @mixin flex-center {
   display: flex;
@@ -47,5 +71,53 @@ $radius-sm: 8px;
   &::-webkit-scrollbar-thumb {
     background: $thumb-color;
     border-radius: 10px;
+  }
+}
+
+// Shared surface used by hero, form card, date blocks, modals
+@mixin surface-card {
+  background: var(--card-bg);
+  border: $border-width-strong solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+// Shared control (inputs + textareas)
+@mixin control-field {
+  font-family: inherit;
+  color: var(--text-main);
+  background: var(--input-bg);
+  border: $border-width-strong solid var(--card-border);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: border-color $transition, box-shadow $transition, background $transition;
+
+  &:focus {
+    border-color: var(--accent-color);
+    box-shadow: var(--focus-ring);
+  }
+}
+
+// Shared primary action button
+@mixin btn-primary {
+  font-family: inherit;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--accent-color), #{$accent-hover});
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.28);
+  transition: transform $transition, box-shadow $transition, background $transition, opacity $transition;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.38);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
   }
 }

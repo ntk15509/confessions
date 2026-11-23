@@ -3,7 +3,7 @@
 .close_modal_btn,
 .close_readme_btn {
   position: absolute;
-  background: #e2e8f0;
+  background: var(--close-btn-bg);
   border: none;
   border-radius: 50%;
   width: 32px;
@@ -12,10 +12,10 @@
   font-size: 1rem;
   color: var(--text-main);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background $transition, color $transition, transform $transition;
 
   &:hover {
-    background: $primary-color;
+    background: var(--primary-color);
     color: #ffffff;
     transform: scale(1.1);
   }
@@ -67,14 +67,12 @@
 }
 
 .readme_modal_content {
-  background: var(--card-bg);
-  border: 2px solid var(--card-border);
-  border-radius: var(--radius-lg);
+  @include surface-card;
   width: 100%;
   max-width: 580px;
   max-height: 85vh;
   padding: 24px 20px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-lg);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -125,7 +123,7 @@
   }
 
   code {
-    background: #f1f5f9;
+    background: var(--surface-subtle);
     padding: 2px 6px;
     border-radius: 4px;
     font-family: monospace;
@@ -138,7 +136,7 @@
 .project_author {
   margin-top: 25px;
   padding-top: 15px;
-  border-top: 1.5px dashed $card-border-light;
+  border-top: $border-width dashed var(--card-border);
   text-align: center;
   font-size: 0.9rem;
   color: var(--text-muted);
@@ -166,24 +164,11 @@
 }
 
 .feedback_toggle_btn {
+  @include btn-primary;
   align-self: center;
   margin-top: 6px;
   padding: 9px 16px;
-  border: none;
-  border-radius: var(--radius-md);
-  color: #ffffff;
-  background: linear-gradient(135deg, $accent-color, $accent-hover);
-  font-family: inherit;
   font-size: 0.88rem;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
-  transition: all 0.2s ease;
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
-  }
 }
 
 .feedback_modal_content {
@@ -203,22 +188,12 @@
 }
 
 #feedback_input {
+  @include control-field;
   width: 100%;
   min-height: 130px;
   box-sizing: border-box;
   padding: 12px 14px;
-  border: 2px solid $card-border-light;
-  border-radius: var(--radius-md);
-  background: #ffffff;
-  color: var(--text-main);
-  font: inherit;
   resize: vertical;
-  outline: none;
-
-  &:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
-  }
 }
 
 #feedback_error {
@@ -229,24 +204,12 @@
 }
 
 #feedback_submit_btn {
+  @include btn-primary;
   align-self: flex-end;
   @include flex-center;
   gap: 8px;
   padding: 10px 18px;
-  border: none;
-  border-radius: var(--radius-md);
-  color: #ffffff;
-  background: linear-gradient(135deg, $accent-color, $accent-hover);
-  font-family: inherit;
   font-size: 0.92rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
-  }
 }
 
 /* README table of contents layout */
@@ -389,23 +352,16 @@
 
 /* same look as .feedback_toggle_btn */
 .readme_toc_toggle_btn {
-  color: #ffffff;
-  background: linear-gradient(135deg, $accent-color, $accent-hover);
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
-  }
+  @include btn-primary;
 }
 
 /* same look as .close_readme_btn */
 .readme_toc_close_btn {
-  background: #e2e8f0;
+  background: var(--close-btn-bg);
   color: var(--text-main);
 
   &:hover {
-    background: $primary-color;
+    background: var(--primary-color);
     color: #ffffff;
     transform: scale(1.1);
   }
