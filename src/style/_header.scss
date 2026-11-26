@@ -100,3 +100,40 @@
   }
 }
 
+#contact_us_link {
+  position: absolute;
+  top: 20px;
+  left: 147px;
+
+  height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  padding-left: 14px;
+
+  color: #cbd5e1;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    height: 22px;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  &:hover {
+    color: var(--accent-color);
+  }
+
+  i {
+    font-size: 0.95rem;
+  }
+}

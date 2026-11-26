@@ -17,19 +17,34 @@
   }
 
   #readme_toggle_btn,
-  #theme_toggle_btn {
+  #theme_toggle_btn,
+  #contact_us_link {
     position: absolute;
     top: 14px;
-    padding: 6px 12px;
-    font-size: 0.75rem;
+    height: 30px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
   }
 
   #readme_toggle_btn {
-    left: 14px;
+    left: 5px;
+    padding: 0 8px;
+    font-size: 0.65rem;
+    gap: 3px;
+  }
+
+  #contact_us_link {
+    left: 90px;
+    padding: 0 10px;
+    font-size: 0.75rem;
+    justify-content: center;
   }
 
   #theme_toggle_btn {
     right: 14px;
+    padding: 0 12px;
+    font-size: 0.75rem;
   }
 
   .header_titles h1 {
@@ -93,6 +108,8 @@
   .announcement_wrapper > .next_btn {
     right: 8px;
   }
+
+  
 }
 
 @media (max-width: 420px) {
