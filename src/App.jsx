@@ -1001,6 +1001,15 @@ export default function App() {
             <span>README</span>
           </button>
 
+          <a
+            id="contact_us_link"
+            href="mailto:@email.com"
+            title="Contact Us"
+          >
+            <i className="fa-regular fa-envelope" />
+            <span>Contact Us</span>
+          </a>
+
           <button
             id="theme_toggle_btn"
             title="Chuyển đổi giao diện"
