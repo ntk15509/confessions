@@ -112,7 +112,7 @@
 
   padding-left: 14px;
 
-  color: #cbd5e1;
+  color: var(--text-main);;
   font-size: 0.85rem;
   font-weight: 500;
   text-decoration: none;
@@ -126,7 +126,7 @@
     top: 5px;
     height: 22px;
     width: 1px;
-    background: rgba(255, 255, 255, 0.35);
+    background: var(--card-border);
   }
 
   &:hover {
@@ -136,6 +136,26 @@
   i {
     font-size: 0.95rem;
   }
+
+  span {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 3px;
+    width: 0;
+    height: 1px;
+    background: var(--accent-color);
+    transition: width 0.2s ease;
+  }
+}
+
+&:hover span::after {
+  width: 100%;
+}
+
 }
 
 /* Mobile navigation: hidden on desktop */

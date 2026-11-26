@@ -118,6 +118,11 @@
 &:has(.fa-book-open) {
   i {
     color: var(--accent-color);
+    transition: transform $transition;
+  }
+
+  &:hover i {
+    transform: translateY(-2px);
   }
 }
 
