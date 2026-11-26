@@ -16,7 +16,13 @@
     align-items: center;
   }
 
+  #readme_toggle_btn,
+  #contact_us_link {
+    display: none;
+  }
+
   .header_menu {
+    display: block;
     position: absolute;
     top: 14px;
     left: 5px;
@@ -71,8 +77,8 @@
     transform: translateY(0);
   }
 
-  #readme_toggle_btn,
-  #contact_us_link {
+  .mobile_readme_toggle_btn,
+  .mobile_contact_us_link {
     position: static;
     width: 100%;
     height: 36px;
