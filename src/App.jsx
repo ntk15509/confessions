@@ -1005,6 +1005,25 @@ export default function App() {
     <>
       <div className="app_container">
         <header className="hero_section">
+          <button
+            id="readme_toggle_btn"
+            title="Hướng dẫn sử dụng / README"
+            aria-label="Hướng dẫn sử dụng và giới thiệu"
+            onClick={() => setReadmeOpen(true)}
+          >
+            <i className="fa-solid fa-book-open" />
+            <span>README</span>
+          </button>
+
+          <a
+            id="contact_us_link"
+            href="mailto:@email.com"
+            title="Contact Us"
+          >
+            <i className="fa-regular fa-envelope" />
+            <span>Contact Us</span>
+          </a>
+
           <div
             className={`header_menu${headerMenuOpen ? " open" : ""}`}
             ref={headerMenuRef}
@@ -1022,7 +1041,7 @@ export default function App() {
 
             <div id="header_menu_dropdown" className="header_menu_dropdown">
               <button
-                id="readme_toggle_btn"
+                className="mobile_readme_toggle_btn"
                 title="Hướng dẫn sử dụng / README"
                 aria-label="Hướng dẫn sử dụng và giới thiệu"
                 onClick={() => {
@@ -1035,7 +1054,7 @@ export default function App() {
               </button>
 
               <a
-                id="contact_us_link"
+                className="mobile_contact_us_link"
                 href="mailto:@email.com"
                 title="Contact Us"
                 onClick={() => setHeaderMenuOpen(false)}
