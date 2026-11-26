@@ -16,29 +16,96 @@
     align-items: center;
   }
 
-  #readme_toggle_btn,
-  #theme_toggle_btn,
-  #contact_us_link {
+  .header_menu {
     position: absolute;
     top: 14px;
+    left: 5px;
+    z-index: 20;
+  }
+
+  .header_menu_toggle {
+    width: 34px;
     height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid var(--card-border);
+    border-radius: 9px;
+    color: var(--text-main);
+    background: var(--card-bg);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s ease, border-color 0.2s ease;
+
+    &:hover {
+      background: var(--surface-subtle);
+      border-color: var(--accent-color);
+    }
+  }
+
+  .header_menu_dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 158px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 6px;
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    background: var(--card-bg);
+    box-shadow: var(--shadow-md);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-5px);
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+  }
+
+  .header_menu.open .header_menu_dropdown {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  #readme_toggle_btn,
+  #contact_us_link {
+    position: static;
+    width: 100%;
+    height: 36px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
-  }
-
-  #readme_toggle_btn {
-    left: 5px;
-    padding: 0 8px;
-    font-size: 0.65rem;
-    gap: 3px;
-  }
-
-  #contact_us_link {
-    left: 90px;
+    justify-content: flex-start;
+    gap: 10px;
     padding: 0 10px;
-    font-size: 0.75rem;
-    justify-content: center;
+    border: 0;
+    border-radius: 8px;
+    color: var(--text-main);
+    background: transparent;
+    box-shadow: none;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+
+    &:hover {
+      color: var(--accent-color);
+      background: var(--surface-subtle);
+      transform: none;
+    }
+
+    i {
+      width: 16px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
   }
 
   #theme_toggle_btn {
