@@ -14,8 +14,8 @@ import { supabase } from "./supabase";
 import Announcements from "./components/Announcements";
 import ConfessionCard from "./components/ConfessionCard";
 import ConfessionModal from "./components/ConfessionModal";
-import EmojiPicker from "./components/EmojiPicker";
 import Modal from "./components/Modal";
+import EmojiPicker from "./components/EmojiPicker";
 import incognitoLogo from "./assets/incognito.svg";
 import readmeMarkdownContent from "./README.md?raw";
 
@@ -85,6 +85,7 @@ export default function App() {
   const [dateSearch, setDateSearch] = useState("");
   const [readmeOpen, setReadmeOpen] = useState(false);
   const [tocOpen, setTocOpen] = useState(false);
+  const [headerMenuOpen, setHeaderMenuOpen] = useState(false);
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [feedback, setFeedback] = useState("");
   const [feedbackError, setFeedbackError] = useState("");
@@ -108,6 +109,7 @@ export default function App() {
   const requestIdRef = useRef(0);
   const expandedIdRef = useRef(expandedId);
   const mainEmojiRef = useRef(null);
+  const headerMenuRef = useRef(null);
   const activeQueryRef = useRef({
     query: "",
     dateQuery: ""
@@ -141,17 +143,19 @@ export default function App() {
   }, [readmeOpen]);
 
   useEffect(() => {
-    const handleGlobalKeyDown = (event) => {
-      if (event.key === "Escape") {
-        if (expandedId) setExpandedId(null);
-        if (readmeOpen) setReadmeOpen(false);
-        if (feedbackOpen) setFeedbackOpen(false);
-        if (mainEmojiOpen) setMainEmojiOpen(false);
-      }
-    };
-    window.addEventListener("keydown", handleGlobalKeyDown);
-    return () => window.removeEventListener("keydown", handleGlobalKeyDown);
-  }, [expandedId, readmeOpen, feedbackOpen, mainEmojiOpen]);
+  const handleGlobalKeyDown = (event) => {
+    if (event.key === "Escape") {
+      if (expandedId) setExpandedId(null);
+      if (readmeOpen) setReadmeOpen(false);
+      if (feedbackOpen) setFeedbackOpen(false);
+      if (mainEmojiOpen) setMainEmojiOpen(false);
+      if (headerMenuOpen) setHeaderMenuOpen(false);
+    }
+  };
+
+  window.addEventListener("keydown", handleGlobalKeyDown);
+  return () => window.removeEventListener("keydown", handleGlobalKeyDown);
+}, [expandedId, readmeOpen, feedbackOpen, mainEmojiOpen, headerMenuOpen]);
 
   useEffect(() => {
     if (!mainEmojiOpen) return;
@@ -163,6 +167,25 @@ export default function App() {
     document.addEventListener("mousedown", handleDocumentClick);
     return () => document.removeEventListener("mousedown", handleDocumentClick);
   }, [mainEmojiOpen]);
+
+  useEffect(() => {
+  if (!headerMenuOpen) return;
+
+  const handleDocumentClick = (event) => {
+    if (
+      headerMenuRef.current &&
+      !headerMenuRef.current.contains(event.target)
+    ) {
+      setHeaderMenuOpen(false);
+    }
+  };
+
+  document.addEventListener("mousedown", handleDocumentClick);
+
+  return () => {
+    document.removeEventListener("mousedown", handleDocumentClick);
+  };
+}, [headerMenuOpen]);
 
   useEffect(() => {
     const handleResize = () => setColumns(getColumnCount());
@@ -991,6 +1014,48 @@ export default function App() {
     <>
       <div className="app_container">
         <header className="hero_section">
+
+<div className="mobile_header_menu" ref={headerMenuRef}>
+  <button
+    type="button"
+    className="mobile_header_menu_toggle"
+    aria-label={headerMenuOpen ? "Đóng menu" : "Mở menu"}
+    aria-expanded={headerMenuOpen}
+    aria-controls="mobile_header_menu_dropdown"
+    onClick={() => setHeaderMenuOpen(value => !value)}
+  >
+    <i className={`fa-solid ${headerMenuOpen ? "fa-xmark" : "fa-bars"}`} />
+  </button>
+
+  {headerMenuOpen && (
+    <div
+      id="mobile_header_menu_dropdown"
+      className="mobile_header_menu_dropdown"
+    >
+      <button
+        type="button"
+        className="mobile_header_menu_item"
+        onClick={() => {
+          setReadmeOpen(true);
+          setHeaderMenuOpen(false);
+        }}
+      >
+        <i className="fa-solid fa-book-open" />
+        <span>README</span>
+      </button>
+
+        <a
+          className="mobile_header_menu_item"
+          href="mailto:cfs.workcontact@gmail.com"
+          onClick={() => setHeaderMenuOpen(false)}
+        >
+          <i className="fa-solid fa-envelope" />
+          <span>Contact Us</span>
+        </a>
+    </div>
+  )}
+</div>
+
           <button
             id="readme_toggle_btn"
             title="Hướng dẫn sử dụng / README"
@@ -1003,7 +1068,7 @@ export default function App() {
 
           <a
             id="contact_us_link"
-            href="mailto:@email.com"
+            href="mailto:cfs.workcontact@gmail.com"
             title="Contact Us"
           >
             <i className="fa-regular fa-envelope" />
