@@ -137,3 +137,14 @@
     font-size: 0.95rem;
   }
 }
+
+/* Mobile navigation: hidden on desktop */
+.mobile_header_menu {
+  display: none;
+}
+
+#contact_us_link i,
+.mobile_header_menu_item .fa-envelope {
+  color: #ea4335;
+  font-size: 1rem;
+}
