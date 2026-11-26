@@ -84,7 +84,6 @@ export default function App() {
   const [search, setSearch] = useState("");
   const [dateSearch, setDateSearch] = useState("");
   const [readmeOpen, setReadmeOpen] = useState(false);
-  const [headerMenuOpen, setHeaderMenuOpen] = useState(false);
   const [tocOpen, setTocOpen] = useState(false);
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [feedback, setFeedback] = useState("");
@@ -109,7 +108,6 @@ export default function App() {
   const requestIdRef = useRef(0);
   const expandedIdRef = useRef(expandedId);
   const mainEmojiRef = useRef(null);
-  const headerMenuRef = useRef(null);
   const activeQueryRef = useRef({
     query: "",
     dateQuery: ""
@@ -149,12 +147,11 @@ export default function App() {
         if (readmeOpen) setReadmeOpen(false);
         if (feedbackOpen) setFeedbackOpen(false);
         if (mainEmojiOpen) setMainEmojiOpen(false);
-        if (headerMenuOpen) setHeaderMenuOpen(false);
       }
     };
     window.addEventListener("keydown", handleGlobalKeyDown);
     return () => window.removeEventListener("keydown", handleGlobalKeyDown);
-  }, [expandedId, readmeOpen, feedbackOpen, mainEmojiOpen, headerMenuOpen]);
+  }, [expandedId, readmeOpen, feedbackOpen, mainEmojiOpen]);
 
   useEffect(() => {
     if (!mainEmojiOpen) return;
@@ -166,17 +163,6 @@ export default function App() {
     document.addEventListener("mousedown", handleDocumentClick);
     return () => document.removeEventListener("mousedown", handleDocumentClick);
   }, [mainEmojiOpen]);
-
-  useEffect(() => {
-    if (!headerMenuOpen) return;
-    const handleOutsidePointerDown = (event) => {
-      if (headerMenuRef.current && !headerMenuRef.current.contains(event.target)) {
-        setHeaderMenuOpen(false);
-      }
-    };
-    document.addEventListener("pointerdown", handleOutsidePointerDown);
-    return () => document.removeEventListener("pointerdown", handleOutsidePointerDown);
-  }, [headerMenuOpen]);
 
   useEffect(() => {
     const handleResize = () => setColumns(getColumnCount());
@@ -1023,47 +1009,6 @@ export default function App() {
             <i className="fa-regular fa-envelope" />
             <span>Contact Us</span>
           </a>
-
-          <div
-            className={`header_menu${headerMenuOpen ? " open" : ""}`}
-            ref={headerMenuRef}
-          >
-            <button
-              type="button"
-              className="header_menu_toggle"
-              aria-label={headerMenuOpen ? "Đóng menu" : "Mở menu"}
-              aria-expanded={headerMenuOpen}
-              aria-controls="header_menu_dropdown"
-              onClick={() => setHeaderMenuOpen(value => !value)}
-            >
-              <i className="fa-solid fa-bars" />
-            </button>
-
-            <div id="header_menu_dropdown" className="header_menu_dropdown">
-              <button
-                className="mobile_readme_toggle_btn"
-                title="Hướng dẫn sử dụng / README"
-                aria-label="Hướng dẫn sử dụng và giới thiệu"
-                onClick={() => {
-                  setReadmeOpen(true);
-                  setHeaderMenuOpen(false);
-                }}
-              >
-                <i className="fa-solid fa-book-open" />
-                <span>README</span>
-              </button>
-
-              <a
-                className="mobile_contact_us_link"
-                href="mailto:@email.com"
-                title="Contact Us"
-                onClick={() => setHeaderMenuOpen(false)}
-              >
-                <i className="fa-regular fa-envelope" />
-                <span>Contact Us</span>
-              </a>
-            </div>
-          </div>
 
           <button
             id="theme_toggle_btn"
