@@ -1071,7 +1071,7 @@ export default function App() {
             href="mailto:cfs.workcontact@gmail.com"
             title="Contact Us"
           >
-            <i className="fa-regular fa-envelope" />
+            <i className="fa-solid fa-envelope" />
             <span>Contact Us</span>
           </a>
 
