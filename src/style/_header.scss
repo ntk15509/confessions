@@ -1,9 +1,5 @@
 @use "variables" as *;
 
-.header_menu {
-  display: none;
-}
-
 .hero_section {
   @include surface-card;
   padding: $space-7 $space-6;
